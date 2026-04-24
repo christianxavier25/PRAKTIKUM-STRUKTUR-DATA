@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 class formatBiodata {
@@ -634,27 +633,35 @@ public class masterData_modul5 {
     }
 
     // --- METHOD untuk Mengurutkan Data (BubbleSort) ---
-    public static formatBiodata[] mengurutkanDataBubble(formatBiodata biodataMahasiswa[]) {
+    public static void mengurutkanDataBubble(formatBiodata biodataMahasiswa[], boolean ascending) {
         formatBiodata biodataSementara = new formatBiodata();
         int indeksTerakhir = N - 1;
         for (int j = 0; j <= indeksTerakhir - 1; j++) {
             for (int i = 0; i <= indeksTerakhir - 1 - j; i++) {
                 // perintah dibawah ini identik dengan if (nama[i]>nama[i+1])
-                // if (biodataMahasiswa[i].nama.compareTo(biodataMahasiswa[i + 1].nama) < 0) {
-                // // jika descending, maka ubah tanda > menjadi < (kurang dari)
-                if (biodataMahasiswa[i].nama.compareTo(biodataMahasiswa[i + 1].nama) > 0) {
-                    biodataSementara = biodataMahasiswa[i];
-                    biodataMahasiswa[i] = biodataMahasiswa[i + 1];
-                    biodataMahasiswa[i + 1] = biodataSementara;
+                // Jika parameter accending bernilai true, maka gunakan logika untuk mengurutkan
+                // dari kecil ke besar (ascending)
+                if (ascending) {
+                    if (biodataMahasiswa[i].nama.compareTo(biodataMahasiswa[i + 1].nama) > 0) {
+                        biodataSementara = biodataMahasiswa[i];
+                        biodataMahasiswa[i] = biodataMahasiswa[i + 1];
+                        biodataMahasiswa[i + 1] = biodataSementara;
+                    }
+                    // Jika parameter accending bernilai false, maka gunakan logika untuk
+                    // mengurutkan dari besar ke kecil (descending)
+                } else {
+                    if (biodataMahasiswa[i].nama.compareTo(biodataMahasiswa[i + 1].nama) < 0) {
+                        biodataSementara = biodataMahasiswa[i];
+                        biodataMahasiswa[i] = biodataMahasiswa[i + 1];
+                        biodataMahasiswa[i + 1] = biodataSementara;
+                    }
                 }
             }
         }
-
-        return biodataMahasiswa;
     }
 
     // --- METHOD untuk Mengurutkan Data (Selection) ---
-    public static void mengurutkanDataSelection(formatBiodata biodataMahasiswa[]) {
+    public static void mengurutkanDataSelection(formatBiodata biodataMahasiswa[], boolean ascending) {
         formatBiodata biodataSementara = new formatBiodata();
 
         for (int i = 0; i <= N - 2; i++) {
@@ -664,10 +671,14 @@ public class masterData_modul5 {
             // 2. Cari di sisa array (dari i+1 sampai akhir) apakah ada yang lebih kecil
             for (int S = i + 1; S <= N - 1; S++) {
                 // Bandingkan nama di posisi S dengan nama di posisi lokasiTerkecil
-                // if (biodataMahasiswa[S].nama.compareTo(biodataMahasiswa[lokasiTerkecil].nama)
-                // < 0) { // jika descending, maka ubah tanda < menjadi > (lebih dari)
-                if (biodataMahasiswa[S].nama.compareTo(biodataMahasiswa[lokasiTerkecil].nama) < 0) {
-                    lokasiTerkecil = S; // Catat indeks yang punya nama lebih kecil
+                if (ascending) {
+                    if (biodataMahasiswa[S].nama.compareTo(biodataMahasiswa[lokasiTerkecil].nama) < 0) {
+                        lokasiTerkecil = S; // Catat indeks yang punya nama lebih kecil
+                    }
+                } else {
+                    if (biodataMahasiswa[S].nama.compareTo(biodataMahasiswa[lokasiTerkecil].nama) > 0) {
+                        lokasiTerkecil = S; // Catat indeks yang punya nama lebih kecil
+                    }
                 }
             }
 
@@ -683,7 +694,7 @@ public class masterData_modul5 {
     }
 
     // --- METHOD untuk Mengurutkan Data (Insertion) ---
-    public static void mengurutkanDataInsertion(formatBiodata biodataMahasiswa[]) {
+    public static void mengurutkanDataInsertion(formatBiodata biodataMahasiswa[], boolean ascending) {
         formatBiodata biodataSementara = new formatBiodata();
         // untuk menentukan awal dari data sisi kanan (sisi yg masih berantakan)
         int awal;
@@ -696,23 +707,30 @@ public class masterData_modul5 {
             // cari akan bergerak dari kanan (awal-1) ke kiri
             while (cari >= 0) {
                 // ( biodataMahasiswa[cari].nama > biodataSementara.nama )
-                // if (biodataMahasiswa[cari].nama.compareTo(biodataSementara.nama) < 0) { //
-                // jika descending, maka ubah
-                // tanda > menjadi < (lebih
-                // kecil dari)
-                if (biodataMahasiswa[cari].nama.compareTo(biodataSementara.nama) > 0) {
-                    biodataMahasiswa[cari + 1] = biodataMahasiswa[cari];
-                    biodataMahasiswa[cari] = biodataSementara;
-                    cari--; // cari digeser kekiri 1 langkah
+                if (ascending) {
+                    if (biodataMahasiswa[cari].nama.compareTo(biodataSementara.nama) > 0) {
+                        biodataMahasiswa[cari + 1] = biodataMahasiswa[cari];
+                        biodataMahasiswa[cari] = biodataSementara;
+                        cari--; // cari digeser kekiri 1 langkah
+                    } else {
+                        biodataMahasiswa[cari + 1] = biodataSementara;
+                        // perintah ini untuk keluar dari loop while
+                        cari = -1;
+                    }
                 } else {
-                    biodataMahasiswa[cari + 1] = biodataSementara;
-                    // perintah ini untuk keluar dari loop while
-                    cari = -1;
+                    if (biodataMahasiswa[cari].nama.compareTo(biodataSementara.nama) < 0) {
+                        biodataMahasiswa[cari + 1] = biodataMahasiswa[cari];
+                        biodataMahasiswa[cari] = biodataSementara;
+                        cari--; // cari digeser kekiri 1 langkah
+                    } else {
+                        biodataMahasiswa[cari + 1] = biodataSementara;
+                        // perintah ini untuk keluar dari loop while
+                        cari = -1;
+                    }
                 }
             }
             awal++;
         }
-
     }
 
     // --- Program Utama ---
@@ -791,23 +809,37 @@ public class masterData_modul5 {
          */
 
         // <================= MODUL 5 =================>
-        /* */
         // Praktik 1
-        System.out.println("Method mengurutkanDataBubble Di Panggil");
-        // formatBiodata dataSortingDouble[] =
-        // (mengurutkanDataBubble(biodataMahasiswa));
-        formatBiodata dataSortingDouble[] = Arrays.copyOf(biodataMahasiswa, biodataMahasiswa.length);
-        mengurutkanDataBubble(dataSortingDouble);
-        tampilkanData(dataSortingDouble);
+        System.out.println("Method mengurutkanDataBubble Di Panggil dengan parameter true -> Ascending");
+        // parameter true mengurutkan dari kecil ke besar (ascending)
+        mengurutkanDataBubble(biodataMahasiswa, true);
+        tampilkanData(biodataMahasiswa);
+
+        System.out.println("Method mengurutkanDataBubble Di Panggil dengan parameter false -> Descending");
+        // parameter false mengurutkan dari besar ke kecil (descending)
+        mengurutkanDataBubble(biodataMahasiswa, false);
+        tampilkanData(biodataMahasiswa);
 
         // Praktik 2
-        System.out.println("Method mengurutkanDataSelection Di Panggil");
-        // mengurutkanDataSelection(biodataMahasiswa);
+        System.out.println("Method mengurutkanDataSelection Di Panggil dengan parameter true -> Ascending");
+        // parameter true mengurutkan dari kecil ke besar (ascending)
+        mengurutkanDataSelection(biodataMahasiswa, true);
+        tampilkanData(biodataMahasiswa);
+
+        System.out.println("Method mengurutkanDataSelection Di Panggil dengan parameter false -> Descending");
+        // parameter false mengurutkan dari besar ke kecil (descending)
+        mengurutkanDataSelection(biodataMahasiswa, false);
         tampilkanData(biodataMahasiswa);
 
         // Praktik 3
-        // System.out.println("Method mengurutkanDataInsertion Di Panggil");
-        // mengurutkanDataInsertion(biodataMahasiswa);
-        // tampilkanData(biodataMahasiswa);
+        System.out.println("Method mengurutkanDataInsertion Di Panggil dengan parameter true -> Ascending");
+        // parameter true mengurutkan dari kecil ke besar (ascending)
+        mengurutkanDataInsertion(biodataMahasiswa, true);
+        tampilkanData(biodataMahasiswa);
+
+        System.out.println("Method mengurutkanDataInsertion Di Panggil dengan parameter false -> Descending");
+        // parameter false mengurutkan dari besar ke kecil (descending)
+        mengurutkanDataInsertion(biodataMahasiswa, false);
+        tampilkanData(biodataMahasiswa);
     }
 }
