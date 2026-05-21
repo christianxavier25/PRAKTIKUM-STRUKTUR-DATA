@@ -10,7 +10,7 @@ class simpul { // bagian deklarasi struktur record -----------------------------
     simpul kanan;
 }
 
-class praktik8_1 {
+class praktik8_1dan2 {
     public static Scanner masukan = new Scanner(System.in);
     public static simpul awal;
     public static simpul akhir;
