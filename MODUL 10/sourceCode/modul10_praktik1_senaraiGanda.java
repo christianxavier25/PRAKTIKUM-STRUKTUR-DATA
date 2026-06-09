@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.Arrays;
 
 class simpul {
     String nama; // FIX 1: tambah field nama yang hilang
@@ -130,23 +131,26 @@ class modul10_praktik1_senaraiGanda { // FIX 2: semua method masuk ke dalam clas
             System.out.print("....MAAF SENARAI KOSONG....");
         else {
             System.out.println(" ");
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
             System.out.printf("| %-3s | %-15s | %-20s | %-8s | %-10s | %-15s | %-15s | %-15s | %-8s |%n",
-                "NO", "NAMA", "ALAMAT", "UMUR", "JEKEL", "HOBI 1", "HOBI 2", "HOBI 3", "IPK");
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+                    "NO", "NAMA", "ALAMAT", "UMUR", "JEKEL", "HOBI 1", "HOBI 2", "HOBI 3", "IPK");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
 
             simpul bantu = awal;
             int no = 1;
 
             while (bantu != null) {
                 System.out.printf("| %-3d | %-15s | %-20s | %-8d | %-10s | %-15s | %-15s | %-15s | %-8.2f |%n",
-                    no, bantu.nama, bantu.alamat, bantu.umur, bantu.jekel,
-                    bantu.hobi[0], bantu.hobi[1], bantu.hobi[2], bantu.ipk);
+                        no, bantu.nama, bantu.alamat, bantu.umur, bantu.jekel,
+                        bantu.hobi[0], bantu.hobi[1], bantu.hobi[2], bantu.ipk);
                 bantu = bantu.kanan;
                 no++;
             }
 
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
             System.out.println(" ");
         }
     }
@@ -217,15 +221,15 @@ class modul10_praktik1_senaraiGanda { // FIX 2: semua method masuk ke dalam clas
             baru.hobi[2] = HOBI[2];
             baru.ipk = IPK;
 
-            simpul sesudah = bantu.kanan;   // simpul yang akan ada di kanan baru
-            baru.kanan = sesudah;           // 1. baru → sesudah
-            baru.kiri  = bantu;             // 2. baru ← bantu
+            simpul sesudah = bantu.kanan; // simpul yang akan ada di kanan baru
+            baru.kanan = sesudah; // 1. baru → sesudah
+            baru.kiri = bantu; // 2. baru ← bantu
             if (sesudah != null) {
-                sesudah.kiri = baru;        // 3. sesudah ← baru (jika bukan akhir)
+                sesudah.kiri = baru; // 3. sesudah ← baru (jika bukan akhir)
             } else {
-                akhir = baru;               // 3b. jika sisip di akhir, update akhir
+                akhir = baru; // 3b. jika sisip di akhir, update akhir
             }
-            bantu.kanan = baru;             // 4. bantu → baru (terakhir!)
+            bantu.kanan = baru; // 4. bantu → baru (terakhir!)
         }
     }
 
@@ -235,17 +239,16 @@ class modul10_praktik1_senaraiGanda { // FIX 2: semua method masuk ke dalam clas
             System.out.println("senarai kosong, menghapus tidak dapat dilakukan");
         } else // jika senarai tidak kosong
         {
-            Scanner masukan = new Scanner(System.in);
             System.out.print("Silakan masukkan nama yang ingin dihapus : ");
             String NAMACARI = masukan.nextLine();
-            if (awal == akhir) //jika hanya ada sebuah simpul
+            if (awal == akhir) // jika hanya ada sebuah simpul
             {
                 if (awal.nama.equals(NAMACARI)) {
                     System.out.println("menghapus " + NAMACARI + " dilakukan..");
                     inisialisasiSenaraiKosong();
                 } else
                     System.out.println("data " + NAMACARI + " tidak ditemukan");
-            } else if (awal.nama.equals(NAMACARI)) //jika nama ditemukan di awal
+            } else if (awal.nama.equals(NAMACARI)) // jika nama ditemukan di awal
             {
                 System.out.println("menghapus " + NAMACARI + " dilakukan..");
                 awal = awal.kanan;
@@ -255,11 +258,12 @@ class modul10_praktik1_senaraiGanda { // FIX 2: semua method masuk ke dalam clas
                 bantu = awal.kanan;
                 while (bantu.nama.equals(NAMACARI) == false) {
                     bantu = bantu.kanan;
-                    if (bantu.kanan == null) break;
+                    if (bantu.kanan == null)
+                        break;
                 }
                 if ((bantu == akhir) && (akhir.nama.equals(NAMACARI) == false)) {
                     System.out.println("data " + NAMACARI + " tidak ditemukan");
-                } else if (akhir.nama.equals(NAMACARI)) //jika nama ditemukan di akhir
+                } else if (akhir.nama.equals(NAMACARI)) // jika nama ditemukan di akhir
                 {
                     akhir = bantu.kiri;
                     akhir.kanan = null;
@@ -277,23 +281,26 @@ class modul10_praktik1_senaraiGanda { // FIX 2: semua method masuk ke dalam clas
             System.out.print("....MAAF SENARAI KOSONG....");
         else {
             System.out.println(" ");
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
             System.out.printf("| %-3s | %-15s | %-20s | %-8s | %-10s | %-15s | %-15s | %-15s | %-8s |%n",
-                "NO", "NAMA", "ALAMAT", "UMUR", "JEKEL", "HOBI 1", "HOBI 2", "HOBI 3", "IPK");
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+                    "NO", "NAMA", "ALAMAT", "UMUR", "JEKEL", "HOBI 1", "HOBI 2", "HOBI 3", "IPK");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
 
             simpul bantu = awal;
             int no = 1;
 
             while (bantu != null) {
                 System.out.printf("| %-3d | %-15s | %-20s | %-8d | %-10s | %-15s | %-15s | %-15s | %-8.2f |%n",
-                    no, bantu.nama, bantu.alamat, bantu.umur, bantu.jekel,
-                    bantu.hobi[0], bantu.hobi[1], bantu.hobi[2], bantu.ipk);
-                bantu = bantu.kanan;  // traversal ke depan
+                        no, bantu.nama, bantu.alamat, bantu.umur, bantu.jekel,
+                        bantu.hobi[0], bantu.hobi[1], bantu.hobi[2], bantu.ipk);
+                bantu = bantu.kanan; // traversal ke depan
                 no++;
             }
 
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
             System.out.println(" ");
         }
     }
@@ -303,37 +310,54 @@ class modul10_praktik1_senaraiGanda { // FIX 2: semua method masuk ke dalam clas
             System.out.print("....MAAF SENARAI KOSONG....");
         else {
             System.out.println(" ");
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
             System.out.printf("| %-3s | %-15s | %-20s | %-8s | %-10s | %-15s | %-15s | %-15s | %-8s |%n",
-                "NO", "NAMA", "ALAMAT", "UMUR", "JEKEL", "HOBI 1", "HOBI 2", "HOBI 3", "IPK");
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+                    "NO", "NAMA", "ALAMAT", "UMUR", "JEKEL", "HOBI 1", "HOBI 2", "HOBI 3", "IPK");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
 
             simpul bantu = akhir;
             int no = 1;
 
             while (bantu != null) {
                 System.out.printf("| %-3d | %-15s | %-20s | %-8d | %-10s | %-15s | %-15s | %-15s | %-8.2f |%n",
-                    no, bantu.nama, bantu.alamat, bantu.umur, bantu.jekel,
-                    bantu.hobi[0], bantu.hobi[1], bantu.hobi[2], bantu.ipk);
-                bantu = bantu.kiri;  // traversal ke belakang
+                        no, bantu.nama, bantu.alamat, bantu.umur, bantu.jekel,
+                        bantu.hobi[0], bantu.hobi[1], bantu.hobi[2], bantu.ipk);
+                bantu = bantu.kiri; // traversal ke belakang
                 no++;
             }
 
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
             System.out.println(" ");
         }
     }
 
     public static void main(String[] args) {
         tambahDepan();
-        // tambahDepan();
-        // tambahDepan();
+        tambahDepan();
+        tambahDepan();
+        tambahDepan();
+        cetakSenarai();
         // tambahBelakang();
-        tambahBelakang();
-        tambahTengah();
-        cetakSenaraiMaju();
-        cetakSenaraiMundur();
-        hapus();
-        cetakSenaraiMaju();
+        // tambahBelakang();
+        // tambahBelakang();
+        // tambahBelakang();
+        // cetakSenarai();
+        // tambahTengah();
+        // cetakSenaraiMaju();
+        // cetakSenaraiMundur();
+        // hapus();
+        // cetakSenaraiMaju();
+
+        System.out.println("Isi sintaks awal.nama : " + awal.nama);
+        System.out.println("Isi sintaks awal.kanan.nama : " + awal.kanan.nama);
+        System.out.println("Isi sintaks awal.kanan.kanan.nama : " + awal.kanan.kanan.nama);
+        System.out.println("Isi sintaks awal.kanan.kanan.kanan.nama : " + awal.kanan.kanan.kanan.nama);
+        System.out.println("Isi sintaks akhir.nama : " + akhir.nama);
+        System.out.println("Isi sintaks akhir.kiri.nama : " + akhir.kiri.nama);
+        System.out.println("Isi sintaks akhir.kiri.kiri.nama : " + akhir.kiri.kiri.nama);
+        System.out.println("Isi sintaks akhir.kiri.kiri.kiri.nama : " + akhir.kiri.kiri.kiri.nama);
     }
 }

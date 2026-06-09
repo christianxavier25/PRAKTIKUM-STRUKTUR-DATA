@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 class simpul {
-    String nama;       // FIX 1: tambah field nama yang hilang
+    String nama; // FIX 1: tambah field nama yang hilang
     String alamat;
     int umur;
     char jekel;
@@ -10,10 +10,10 @@ class simpul {
     simpul kanan;
 }
 
-class modul9_praktik1 {  // FIX 2: semua method masuk ke dalam class ini
+class modul9_praktik1 { // FIX 2: semua method masuk ke dalam class ini
     public static simpul awal;
     public static simpul akhir;
-    public static Scanner masukan = new Scanner(System.in);  // FIX 3: deklarasi Scanner
+    public static Scanner masukan = new Scanner(System.in); // FIX 3: deklarasi Scanner
 
     public static void inisialisasiSenaraiKosong() {
         awal = null;
@@ -122,23 +122,26 @@ class modul9_praktik1 {  // FIX 2: semua method masuk ke dalam class ini
             System.out.print("....MAAF SENARAI KOSONG....");
         else {
             System.out.println(" ");
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
             System.out.printf("| %-3s | %-15s | %-20s | %-8s | %-10s | %-15s | %-15s | %-15s | %-8s |%n",
-                "NO", "NAMA", "ALAMAT", "UMUR", "JEKEL", "HOBI 1", "HOBI 2", "HOBI 3", "IPK");
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+                    "NO", "NAMA", "ALAMAT", "UMUR", "JEKEL", "HOBI 1", "HOBI 2", "HOBI 3", "IPK");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
 
             simpul bantu = awal;
             int no = 1;
 
             while (bantu != null) {
                 System.out.printf("| %-3d | %-15s | %-20s | %-8d | %-10s | %-15s | %-15s | %-15s | %-8.2f |%n",
-                    no, bantu.nama, bantu.alamat, bantu.umur, bantu.jekel,
-                    bantu.hobi[0], bantu.hobi[1], bantu.hobi[2], bantu.ipk);
+                        no, bantu.nama, bantu.alamat, bantu.umur, bantu.jekel,
+                        bantu.hobi[0], bantu.hobi[1], bantu.hobi[2], bantu.ipk);
                 bantu = bantu.kanan;
                 no++;
             }
 
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
             System.out.println(" ");
         }
     }
@@ -156,7 +159,7 @@ class modul9_praktik1 {  // FIX 2: semua method masuk ke dalam class ini
     public static void tambahTengah() {
         System.out.print("Tentukan Lokasi Penambahan Data: ");
         int LOKASI = masukan.nextInt();
-        masukan.nextLine();  // FIX 4: bersihkan buffer setelah nextInt()
+        masukan.nextLine(); // FIX 4: bersihkan buffer setelah nextInt()
 
         int jumlahSimpulYangAda = hitungJumlahSimpul();
 
@@ -220,10 +223,13 @@ class modul9_praktik1 {  // FIX 2: semua method masuk ke dalam class ini
         tambahDepan();
         tambahDepan();
         tambahDepan();
+        cetakSenarai();
         tambahBelakang();
         tambahBelakang();
         tambahBelakang();
         tambahBelakang();
+        cetakSenarai();
+        System.out.println("Method tambah tengah di panggil :");
         tambahTengah();
         cetakSenarai();
     }

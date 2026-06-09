@@ -13,7 +13,7 @@ class simpul {
 class modul9_praktik2 { // FIX 2: semua method masuk ke dalam class ini
     public static simpul awal;
     public static simpul akhir;
-    public static Scanner masukan = new Scanner(System.in); // FIX 3: deklarasi Scanner
+    public static Scanner masukan = new Scanner(System.in);
 
     public static void inisialisasiSenaraiKosong() {
         awal = null;
@@ -122,23 +122,26 @@ class modul9_praktik2 { // FIX 2: semua method masuk ke dalam class ini
             System.out.print("....MAAF SENARAI KOSONG....");
         else {
             System.out.println(" ");
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
             System.out.printf("| %-3s | %-15s | %-20s | %-8s | %-10s | %-15s | %-15s | %-15s | %-8s |%n",
-                "NO", "NAMA", "ALAMAT", "UMUR", "JEKEL", "HOBI 1", "HOBI 2", "HOBI 3", "IPK");
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+                    "NO", "NAMA", "ALAMAT", "UMUR", "JEKEL", "HOBI 1", "HOBI 2", "HOBI 3", "IPK");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
 
             simpul bantu = awal;
             int no = 1;
 
             while (bantu != null) {
                 System.out.printf("| %-3d | %-15s | %-20s | %-8d | %-10s | %-15s | %-15s | %-15s | %-8.2f |%n",
-                    no, bantu.nama, bantu.alamat, bantu.umur, bantu.jekel,
-                    bantu.hobi[0], bantu.hobi[1], bantu.hobi[2], bantu.ipk);
+                        no, bantu.nama, bantu.alamat, bantu.umur, bantu.jekel,
+                        bantu.hobi[0], bantu.hobi[1], bantu.hobi[2], bantu.ipk);
                 bantu = bantu.kanan;
                 no++;
             }
 
-            System.out.println("+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
             System.out.println(" ");
         }
     }
@@ -220,17 +223,16 @@ class modul9_praktik2 { // FIX 2: semua method masuk ke dalam class ini
             System.out.println("senarai kosong, menghapus tidak dapat dilakukan");
         } else // jika senarai tidak kosong
         {
-            Scanner masukan = new Scanner(System.in);
             System.out.print("Silakan masukkan nama yang ingin dihapus : ");
             String NAMACARI = masukan.nextLine();
-            if (awal == akhir) //jika hanya ada sebuah simpul
+            if (awal == akhir) // jika hanya ada sebuah simpul
             {
                 if (awal.nama.equals(NAMACARI)) {
                     System.out.println("menghapus " + NAMACARI + " dilakukan..");
                     inisialisasiSenaraiKosong();
                 } else
                     System.out.println("data " + NAMACARI + " tidak ditemukan");
-            } else if (awal.nama.equals(NAMACARI)) //jika nama ditemukan di awal
+            } else if (awal.nama.equals(NAMACARI)) // jika nama ditemukan di awal
             {
                 System.out.println("menghapus " + NAMACARI + " dilakukan..");
                 awal = awal.kanan;
@@ -239,11 +241,12 @@ class modul9_praktik2 { // FIX 2: semua method masuk ke dalam class ini
                 bantu = awal;
                 while (bantu.kanan.nama.equals(NAMACARI) == false) {
                     bantu = bantu.kanan;
-                    if (bantu.kanan == null) break;
+                    if (bantu.kanan == null)
+                        break;
                 }
                 if ((bantu == akhir) && (akhir.nama.equals(NAMACARI) == false)) {
                     System.out.println("data " + NAMACARI + " tidak ditemukan");
-                } else if (akhir.nama.equals(NAMACARI)) //jika nama ditemukan di akhir
+                } else if (akhir.nama.equals(NAMACARI)) // jika nama ditemukan di akhir
                 {
                     bantu.kanan = null;
                     akhir = bantu;
@@ -261,10 +264,12 @@ class modul9_praktik2 { // FIX 2: semua method masuk ke dalam class ini
         tambahDepan();
         tambahDepan();
         tambahDepan();
+        cetakSenarai();
         tambahBelakang();
         tambahBelakang();
         tambahBelakang();
         tambahBelakang();
+        cetakSenarai();
         tambahTengah();
         cetakSenarai();
         hapus();
