@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.util.Arrays;
 
 class simpul {
     String nama; // FIX 1: tambah field nama yang hilang
@@ -340,24 +339,15 @@ class modul10_praktik1_senaraiGanda { // FIX 2: semua method masuk ke dalam clas
         tambahDepan();
         tambahDepan();
         cetakSenarai();
-        // tambahBelakang();
-        // tambahBelakang();
-        // tambahBelakang();
-        // tambahBelakang();
-        // cetakSenarai();
-        // tambahTengah();
-        // cetakSenaraiMaju();
-        // cetakSenaraiMundur();
-        // hapus();
-        // cetakSenaraiMaju();
-
-        System.out.println("Isi sintaks awal.nama : " + awal.nama);
-        System.out.println("Isi sintaks awal.kanan.nama : " + awal.kanan.nama);
-        System.out.println("Isi sintaks awal.kanan.kanan.nama : " + awal.kanan.kanan.nama);
-        System.out.println("Isi sintaks awal.kanan.kanan.kanan.nama : " + awal.kanan.kanan.kanan.nama);
-        System.out.println("Isi sintaks akhir.nama : " + akhir.nama);
-        System.out.println("Isi sintaks akhir.kiri.nama : " + akhir.kiri.nama);
-        System.out.println("Isi sintaks akhir.kiri.kiri.nama : " + akhir.kiri.kiri.nama);
-        System.out.println("Isi sintaks akhir.kiri.kiri.kiri.nama : " + akhir.kiri.kiri.kiri.nama);
+        tambahBelakang();
+        tambahBelakang();
+        tambahBelakang();
+        tambahBelakang();
+        cetakSenarai();
+        tambahTengah();
+        cetakSenaraiMaju();
+        cetakSenaraiMundur();
+        hapus();
+        cetakSenaraiMaju();
     }
 }
