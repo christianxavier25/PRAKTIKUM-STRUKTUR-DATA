@@ -1,0 +1,498 @@
+import java.util.Scanner;
+
+class simpul {
+    String nama; // FIX 1: tambah field nama yang hilang
+    String alamat;
+    int umur;
+    char jekel;
+    String hobi[] = new String[3];
+    float ipk;
+    simpul kanan;
+}
+
+class modul11_tugas1_SingleList { // FIX 2: semua method masuk ke dalam class ini
+    public static simpul awal;
+    public static simpul akhir;
+    public static Scanner masukan = new Scanner(System.in);
+
+    public static void inisialisasiSenaraiKosong() {
+        awal = null;
+        akhir = null;
+    }
+
+    public static void tambahDepan() {
+        String NAMA, ALAMAT;
+        int UMUR;
+        char JEKEL;
+        String HOBI[] = new String[3];
+        float IPK;
+
+        System.out.println("------------------------------");
+        System.out.println("TAMBAH DEPAN : ");
+        System.out.print("Silakan masukkan nama anda : ");
+        NAMA = masukan.nextLine();
+        System.out.print("Silakan masukkan alamat anda : ");
+        ALAMAT = masukan.nextLine();
+        System.out.print("Silakan masukkan umur anda : ");
+        UMUR = Integer.parseInt(masukan.nextLine());
+        System.out.print("Silakan masukkan Jenis Kelamin anda : ");
+        JEKEL = masukan.nextLine().charAt(0);
+        System.out.println("Silakan masukkan hobi (maks 3) : ");
+        System.out.print("hobi ke-0 : ");
+        HOBI[0] = masukan.nextLine();
+        System.out.print("hobi ke-1 : ");
+        HOBI[1] = masukan.nextLine();
+        System.out.print("hobi ke-2 : ");
+        HOBI[2] = masukan.nextLine();
+        System.out.print("Silakan masukkan IPK anda : ");
+        IPK = masukan.nextFloat();
+        masukan.nextLine();
+
+        simpul baru = new simpul();
+        baru.nama = NAMA;
+        baru.alamat = ALAMAT;
+        baru.umur = UMUR;
+        baru.jekel = JEKEL;
+        baru.hobi[0] = HOBI[0];
+        baru.hobi[1] = HOBI[1];
+        baru.hobi[2] = HOBI[2];
+        baru.ipk = IPK;
+
+        if (awal == null) {
+            awal = baru;
+            akhir = baru;
+            baru.kanan = null;
+        } else {
+            baru.kanan = awal;
+            awal = baru;
+        }
+    }
+
+    public static void tambahBelakang() {
+        String NAMA, ALAMAT;
+        int UMUR;
+        char JEKEL;
+        String HOBI[] = new String[3];
+        float IPK;
+
+        System.out.println("------------------------------");
+        System.out.println("TAMBAH BELAKANG : ");
+        System.out.print("Silakan masukkan nama anda : ");
+        NAMA = masukan.nextLine();
+        System.out.print("Silakan masukkan alamat anda : ");
+        ALAMAT = masukan.nextLine();
+        System.out.print("Silakan masukkan umur anda : ");
+        UMUR = Integer.parseInt(masukan.nextLine());
+        System.out.print("Silakan masukkan Jenis Kelamin anda : ");
+        JEKEL = masukan.nextLine().charAt(0);
+        System.out.println("Silakan masukkan hobi (maks 3) : ");
+        System.out.print("hobi ke-0 : ");
+        HOBI[0] = masukan.nextLine();
+        System.out.print("hobi ke-1 : ");
+        HOBI[1] = masukan.nextLine();
+        System.out.print("hobi ke-2 : ");
+        HOBI[2] = masukan.nextLine();
+        System.out.print("Silakan masukkan IPK anda : ");
+        IPK = masukan.nextFloat();
+        masukan.nextLine();
+
+        simpul baru = new simpul();
+        baru.nama = NAMA;
+        baru.alamat = ALAMAT;
+        baru.umur = UMUR;
+        baru.jekel = JEKEL;
+        baru.hobi[0] = HOBI[0];
+        baru.hobi[1] = HOBI[1];
+        baru.hobi[2] = HOBI[2];
+        baru.ipk = IPK;
+
+        if (awal == null) {
+            awal = baru;
+            akhir = baru;
+            baru.kanan = null;
+        } else {
+            akhir.kanan = baru;
+            akhir = baru;
+            baru.kanan = null;
+        }
+    }
+
+    public static void cetakSenarai() {
+        if (awal == null)
+            System.out.print("....MAAF SENARAI KOSONG....");
+        else {
+            System.out.println(" ");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.printf("| %-3s | %-15s | %-20s | %-8s | %-10s | %-15s | %-15s | %-15s | %-8s |%n",
+                    "NO", "NAMA", "ALAMAT", "UMUR", "JEKEL", "HOBI 1", "HOBI 2", "HOBI 3", "IPK");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+
+            simpul bantu = awal;
+            int no = 1;
+
+            while (bantu != null) {
+                System.out.printf("| %-3d | %-15s | %-20s | %-8d | %-10s | %-15s | %-15s | %-15s | %-8.2f |%n",
+                        no, bantu.nama, bantu.alamat, bantu.umur, bantu.jekel,
+                        bantu.hobi[0], bantu.hobi[1], bantu.hobi[2], bantu.ipk);
+                bantu = bantu.kanan;
+                no++;
+            }
+
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.println(" ");
+        }
+    }
+
+    public static int hitungJumlahSimpul() {
+        int N = 0;
+        simpul bantu = awal;
+        while (bantu != null) {
+            N++;
+            bantu = bantu.kanan;
+        }
+        return N;
+    }
+
+    public static void tambahTengah() {
+        System.out.print("Tentukan Lokasi Penambahan Data: ");
+        int LOKASI = masukan.nextInt();
+        masukan.nextLine(); // FIX 4: bersihkan buffer setelah nextInt()
+
+        int jumlahSimpulYangAda = hitungJumlahSimpul();
+
+        if (LOKASI == 1) {
+            System.out.println("Lakukan penambahan di depan");
+        } else if (LOKASI > jumlahSimpulYangAda) {
+            System.out.println("Lakukan penambahan di belakang");
+        } else {
+            String NAMA, ALAMAT;
+            int UMUR;
+            char JEKEL;
+            String HOBI[] = new String[3];
+            float IPK;
+
+            System.out.println("TAMBAH TENGAH : ");
+            System.out.print("Silakan masukkan nama anda : ");
+            NAMA = masukan.nextLine();
+            System.out.print("Silakan masukkan alamat anda : ");
+            ALAMAT = masukan.nextLine();
+            System.out.print("Silakan masukkan umur anda : ");
+            UMUR = Integer.parseInt(masukan.nextLine());
+            System.out.print("Silakan masukkan Jenis Kelamin anda : ");
+            JEKEL = masukan.nextLine().charAt(0);
+            System.out.println("Silakan masukkan hobi (maks 3) : ");
+            System.out.print("hobi ke-0 : ");
+            HOBI[0] = masukan.nextLine();
+            System.out.print("hobi ke-1 : ");
+            HOBI[1] = masukan.nextLine();
+            System.out.print("hobi ke-2 : ");
+            HOBI[2] = masukan.nextLine();
+            System.out.print("Silakan masukkan IPK anda : ");
+            IPK = masukan.nextFloat();
+            masukan.nextLine();
+
+            // Cari posisi simpul sebelum lokasi yang dikehendaki
+            simpul bantu = awal;
+            int N = 1;
+            while (N < LOKASI - 1 && bantu.kanan != null) {
+                bantu = bantu.kanan;
+                N++;
+            }
+
+            simpul baru = new simpul();
+            baru.nama = NAMA;
+            baru.alamat = ALAMAT;
+            baru.umur = UMUR;
+            baru.jekel = JEKEL;
+            baru.hobi[0] = HOBI[0];
+            baru.hobi[1] = HOBI[1];
+            baru.hobi[2] = HOBI[2];
+            baru.ipk = IPK;
+
+            baru.kanan = bantu.kanan;
+            bantu.kanan = baru;
+        }
+    }
+
+    public static void hapus() {
+        if (awal == null) // jika senarai masih kosong
+        {
+            System.out.println("senarai kosong, menghapus tidak dapat dilakukan");
+        } else // jika senarai tidak kosong
+        {
+            System.out.print("Silakan masukkan nama yang ingin dihapus : ");
+            String NAMACARI = masukan.nextLine();
+            if (awal == akhir) // jika hanya ada sebuah simpul
+            {
+                if (awal.nama.equals(NAMACARI)) {
+                    System.out.println("menghapus " + NAMACARI + " dilakukan..");
+                    inisialisasiSenaraiKosong();
+                } else
+                    System.out.println("data " + NAMACARI + " tidak ditemukan");
+            } else if (awal.nama.equals(NAMACARI)) // jika nama ditemukan di awal
+            {
+                System.out.println("menghapus " + NAMACARI + " dilakukan..");
+                awal = awal.kanan;
+            } else {
+                simpul bantu;
+                bantu = awal;
+                while (bantu.kanan.nama.equals(NAMACARI) == false) {
+                    bantu = bantu.kanan;
+                    if (bantu.kanan == null)
+                        break;
+                }
+                if ((bantu == akhir) && (akhir.nama.equals(NAMACARI) == false)) {
+                    System.out.println("data " + NAMACARI + " tidak ditemukan");
+                } else if (akhir.nama.equals(NAMACARI)) // jika nama ditemukan di akhir
+                {
+                    bantu.kanan = null;
+                    akhir = bantu;
+                } else {
+                    System.out.println("menghapus " + NAMACARI + " dilakukan..");
+                    bantu.kanan = bantu.kanan.kanan;
+                }
+            }
+        }
+    }
+
+    // PROGRAM 11.1. Fungsi Bubblesort untuk single linkedlist dan double linkedlist
+    // dengan penukaran isi variabel
+    public static void tukarNilai(simpul X, simpul Y) {
+        simpul sementara = new simpul();
+
+        sementara.nama = X.nama;
+        sementara.alamat = X.alamat;
+        sementara.umur = X.umur;
+        sementara.jekel = X.jekel;
+        sementara.ipk = X.ipk;
+
+        X.nama = Y.nama;
+        X.alamat = Y.alamat;
+        X.umur = Y.umur;
+        X.jekel = Y.jekel;
+        X.ipk = Y.ipk;
+
+        Y.nama = sementara.nama;
+        Y.alamat = sementara.alamat;
+        Y.umur = sementara.umur;
+        Y.jekel = sementara.jekel;
+        Y.ipk = sementara.ipk;
+    }
+
+    // ---------------------------------------------------------
+    // bisa untuk single LL dan double LL
+    // ---------------------------------------------------------
+    public static void mengurutkanDataBubble_TeknikTukarNilai_singleList() {
+        int N = hitungJumlahSimpul();
+        simpul A = null;
+        simpul B = null;
+        simpul berhenti = akhir.kanan;
+
+        System.out.println("Banyaknya simpul = " + hitungJumlahSimpul());
+        for (int i = 1; i <= hitungJumlahSimpul() - 1; i++) {
+            A = awal;
+            B = awal.kanan;
+            int nomor = 1;
+            while (B != berhenti) {
+                if (A.nama.compareTo(B.nama) > 0) {
+                    // tukarkan elemen dari simpul A dan elemen dari simpul B
+                    tukarNilai(A, B);
+                }
+                A = A.kanan;
+                B = B.kanan;
+                nomor++;
+            }
+            berhenti = A;
+        }
+        System.out.println("===PROSES PENGURUTAN BUBBLE SELESAI======");
+    }
+
+    // Program 11.2. Fungsi Bubblesort untuk single linkedlist dengan penukaran
+    // posisi heap
+    public static void mengurutkanDataBubble_TeknikTukarHeap_singleList() {
+        int N = hitungJumlahSimpul();
+        simpul A = null;
+        simpul B = null;
+        simpul bantu = null;
+        simpul berhenti = akhir.kanan;
+        int nomor;
+
+        System.out.println("Banyaknya simpul = " + hitungJumlahSimpul());
+        for (int i = 1; i <= hitungJumlahSimpul() - 1; i++)
+        // for (int i=1; i<= 4; i++)
+        {
+            A = awal;
+            B = awal.kanan;
+            nomor = 1;
+
+            // proses banding-tukar, khusus simpul pertama dgn sebelahnya
+            if (A.nama.compareTo(B.nama) > 0) {
+                A.kanan = B.kanan;
+                B.kanan = A;
+                awal = B;
+            }
+
+            // proses banding-tukar, simpul kedua dgn sebelahnya, dst
+            nomor++;
+            bantu = awal;
+            while (bantu.kanan.kanan != berhenti) {
+                A = bantu.kanan;
+                B = bantu.kanan.kanan;
+                if (A.nama.compareTo(B.nama) > 0) {
+                    // tukarkan simpul A dan simpul B
+                    A.kanan = B.kanan;
+                    B.kanan = A;
+                    bantu.kanan = B;
+                    if (B == akhir)
+                        akhir = A;
+                }
+                bantu = bantu.kanan;
+                nomor++;
+            }
+            berhenti = bantu.kanan;
+            ;
+            System.out.println("");
+        }
+        System.out.println("===PROSES PENGURUTAN BUBBLE SELESAI======");
+    }
+
+    // Program 11.4. Fungsi Linear Search pada single linkedlist
+    public static void cariLinear() {
+        if (awal == null) // jika senarai masih kosong
+            System.out.print("....MAAF SENARAI KOSONG....");
+        else // jika senarai tidak kosong
+        {
+            System.out.print("Silakan masukkan nama yang anda cari : ");
+            String NAMACARI = masukan.nextLine();
+
+            boolean statusKetemu = false;
+            int i = 1; // inisialisasi i untuk menghitung posisi simpul yang sedang diperiksa dari 0 di
+                       // ganti menjadi 1 agar posisi yang ditampilkan sesuai dengan posisi sebenarnya
+                       // (dimulai dari 1)
+            int posisiKetemu = -1;
+
+            simpul bantu;
+            bantu = awal;
+            while (bantu != null) {
+                if (NAMACARI.equals(bantu.nama)) {
+                    statusKetemu = true;
+                    posisiKetemu = i;
+                }
+                bantu = bantu.kanan;
+                i++;
+            }
+            System.out.println("Status Ketemu = " + statusKetemu + " di posisi ke " + posisiKetemu);
+        }
+    }
+
+    public static void mengurutkanDataInsertion_TeknikTukarNilai_singleList() {
+        if (awal == null || awal.kanan == null) {
+            System.out.println("Senarai kosong atau hanya berisi 1 simpul, tidak perlu diurutkan.");
+            return;
+        }
+
+        System.out.println("Banyaknya simpul = " + hitungJumlahSimpul());
+
+        simpul i = awal.kanan; // Dimulai dari simpul kedua
+        while (i != null) {
+            simpul j = awal;
+            // Cari posisi yang tepat dari awal hingga simpul 'i'
+            while (j != i) {
+                if (j.nama.compareTo(i.nama) > 0) {
+                    // Tukar nilai data antara simpul J dan simpul I
+                    tukarNilai(j, i);
+                }
+                j = j.kanan;
+            }
+            i = i.kanan; // Berpindah ke simpul berikutnya
+        }
+        System.out.println("===PROSES PENGURUTAN INSERTION (TUKAR NILAI) SELESAI======");
+    }
+
+    public static void mengurutkanDataInsertion_TeknikTukarHeap_singleList() {
+        if (awal == null || awal.kanan == null) {
+            System.out.println("Senarai kosong atau hanya berisi 1 simpul.");
+            return;
+        }
+
+        System.out.println("Banyaknya simpul = " + hitungJumlahSimpul());
+
+        simpul listBaruTerurut = null; // Head untuk list baru yang terurut
+        simpul saatIni = awal; // Pointer untuk menelusuri list asli
+
+        while (saatIni != null) {
+            simpul berikutnya = saatIni.kanan; // Simpan referensi ke simpul selanjutnya sebelum dicopot
+
+            // Kasus A: Jika list baru masih kosong ATAU simpul saatIni harus berada di
+            // paling awal
+            if (listBaruTerurut == null || listBaruTerurut.nama.compareTo(saatIni.nama) >= 0) {
+                saatIni.kanan = listBaruTerurut;
+                listBaruTerurut = saatIni;
+            }
+            // Kasus B: Menyisipkan simpul di tengah atau di akhir list baru
+            else {
+                simpul bantu = listBaruTerurut;
+                // Cari simpul yang nilainya tepat sebelum posisi sisip
+                while (bantu.kanan != null && bantu.kanan.nama.compareTo(saatIni.nama) < 0) {
+                    bantu = bantu.kanan;
+                }
+                // Sisipkan simpul saatIni di antara 'bantu' dan 'bantu.kanan'
+                saatIni.kanan = bantu.kanan;
+                bantu.kanan = saatIni;
+            }
+
+            saatIni = berikutnya; // Lanjut ke simpul berikutnya dari list asli
+        }
+
+        // Kembalikan ke pointer utama list Anda
+        awal = listBaruTerurut;
+
+        // Opsional: Cari kembali simpul akhir yang baru untuk memperbarui pointer
+        // 'akhir' Anda
+        simpul cariAkhir = awal;
+        while (cariAkhir != null && cariAkhir.kanan != null) {
+            cariAkhir = cariAkhir.kanan;
+        }
+        akhir = cariAkhir;
+
+        System.out.println("===PROSES PENGURUTAN INSERTION (TUKAR HEAP) SELESAI======");
+    }
+
+    public static void main(String[] args) {
+        inisialisasiSenaraiKosong();
+        tambahDepan();
+        tambahDepan();
+        tambahDepan();
+        tambahDepan();
+        cetakSenarai();
+        tambahBelakang();
+        tambahBelakang();
+        tambahBelakang();
+        tambahBelakang();
+        cetakSenarai();
+        mengurutkanDataInsertion_TeknikTukarNilai_singleList();
+        cetakSenarai();
+
+        System.out.println();
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println();
+
+        inisialisasiSenaraiKosong();
+        tambahDepan();
+        tambahDepan();
+        tambahDepan();
+        tambahDepan();
+        cetakSenarai();
+        tambahBelakang();
+        tambahBelakang();
+        tambahBelakang();
+        tambahBelakang();
+        cetakSenarai();
+        mengurutkanDataInsertion_TeknikTukarHeap_singleList();
+        cetakSenarai();
+    }
+}

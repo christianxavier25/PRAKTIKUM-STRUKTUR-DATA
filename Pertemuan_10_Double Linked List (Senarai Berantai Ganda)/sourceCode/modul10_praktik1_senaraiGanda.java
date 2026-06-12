@@ -7,13 +7,14 @@ class simpul {
     char jekel;
     String hobi[] = new String[3];
     float ipk;
+    simpul kiri;
     simpul kanan;
 }
 
-class modul11_tugas1_SingleList { // FIX 2: semua method masuk ke dalam class ini
+class modul10_praktik1_senaraiGanda { // FIX 2: semua method masuk ke dalam class ini
     public static simpul awal;
     public static simpul akhir;
-    public static Scanner masukan = new Scanner(System.in);
+    public static Scanner masukan = new Scanner(System.in); // FIX 3: deklarasi Scanner
 
     public static void inisialisasiSenaraiKosong() {
         awal = null;
@@ -61,10 +62,13 @@ class modul11_tugas1_SingleList { // FIX 2: semua method masuk ke dalam class in
         if (awal == null) {
             awal = baru;
             akhir = baru;
+            baru.kiri = null;
             baru.kanan = null;
         } else {
             baru.kanan = awal;
+            awal.kiri = baru;
             awal = baru;
+            awal.kiri = null;
         }
     }
 
@@ -106,14 +110,18 @@ class modul11_tugas1_SingleList { // FIX 2: semua method masuk ke dalam class in
         baru.hobi[2] = HOBI[2];
         baru.ipk = IPK;
 
-        if (awal == null) {
+        if (awal == null) // jika senarai kosong
+        {
             awal = baru;
             akhir = baru;
+            baru.kiri = null;
             baru.kanan = null;
-        } else {
+        } else // jika senarai tidak kosong
+        {
+            baru.kiri = akhir;
             akhir.kanan = baru;
             akhir = baru;
-            baru.kanan = null;
+            akhir.kanan = null;
         }
     }
 
@@ -194,12 +202,12 @@ class modul11_tugas1_SingleList { // FIX 2: semua method masuk ke dalam class in
             IPK = masukan.nextFloat();
             masukan.nextLine();
 
-            // Cari posisi simpul sebelum lokasi yang dikehendaki
+            // Cari simpul di posisi LOKASI-1 (simpul sebelum posisi sisip)
             simpul bantu = awal;
-            int N = 1;
-            while (N < LOKASI - 1 && bantu.kanan != null) {
+            int i = 1;
+            while (i < LOKASI - 1) {
                 bantu = bantu.kanan;
-                N++;
+                i++;
             }
 
             simpul baru = new simpul();
@@ -212,8 +220,15 @@ class modul11_tugas1_SingleList { // FIX 2: semua method masuk ke dalam class in
             baru.hobi[2] = HOBI[2];
             baru.ipk = IPK;
 
-            baru.kanan = bantu.kanan;
-            bantu.kanan = baru;
+            simpul sesudah = bantu.kanan; // simpul yang akan ada di kanan baru
+            baru.kanan = sesudah; // 1. baru → sesudah
+            baru.kiri = bantu; // 2. baru ← bantu
+            if (sesudah != null) {
+                sesudah.kiri = baru; // 3. sesudah ← baru (jika bukan akhir)
+            } else {
+                akhir = baru; // 3b. jika sisip di akhir, update akhir
+            }
+            bantu.kanan = baru; // 4. bantu → baru (terakhir!)
         }
     }
 
@@ -236,10 +251,11 @@ class modul11_tugas1_SingleList { // FIX 2: semua method masuk ke dalam class in
             {
                 System.out.println("menghapus " + NAMACARI + " dilakukan..");
                 awal = awal.kanan;
+                awal.kiri = null;
             } else {
                 simpul bantu;
-                bantu = awal;
-                while (bantu.kanan.nama.equals(NAMACARI) == false) {
+                bantu = awal.kanan;
+                while (bantu.nama.equals(NAMACARI) == false) {
                     bantu = bantu.kanan;
                     if (bantu.kanan == null)
                         break;
@@ -248,221 +264,76 @@ class modul11_tugas1_SingleList { // FIX 2: semua method masuk ke dalam class in
                     System.out.println("data " + NAMACARI + " tidak ditemukan");
                 } else if (akhir.nama.equals(NAMACARI)) // jika nama ditemukan di akhir
                 {
-                    bantu.kanan = null;
-                    akhir = bantu;
+                    akhir = bantu.kiri;
+                    akhir.kanan = null;
                 } else {
                     System.out.println("menghapus " + NAMACARI + " dilakukan..");
-                    bantu.kanan = bantu.kanan.kanan;
+                    bantu.kanan.kiri = bantu.kiri;
+                    bantu.kiri.kanan = bantu.kanan;
                 }
             }
         }
     }
 
-    // PROGRAM 11.1. Fungsi Bubblesort untuk single linkedlist dan double linkedlist
-    // dengan penukaran isi variabel
-    public static void tukarNilai(simpul X, simpul Y) {
-        simpul sementara = new simpul();
-
-        sementara.nama = X.nama;
-        sementara.alamat = X.alamat;
-        sementara.umur = X.umur;
-        sementara.jekel = X.jekel;
-        sementara.ipk = X.ipk;
-
-        X.nama = Y.nama;
-        X.alamat = Y.alamat;
-        X.umur = Y.umur;
-        X.jekel = Y.jekel;
-        X.ipk = Y.ipk;
-
-        Y.nama = sementara.nama;
-        Y.alamat = sementara.alamat;
-        Y.umur = sementara.umur;
-        Y.jekel = sementara.jekel;
-        Y.ipk = sementara.ipk;
-    }
-
-    // ---------------------------------------------------------
-    // bisa untuk single LL dan double LL
-    // ---------------------------------------------------------
-    public static void mengurutkanDataBubble_TeknikTukarNilai_singleList() {
-        int N = hitungJumlahSimpul();
-        simpul A = null;
-        simpul B = null;
-        simpul berhenti = akhir.kanan;
-
-        System.out.println("Banyaknya simpul = " + hitungJumlahSimpul());
-        for (int i = 1; i <= hitungJumlahSimpul() - 1; i++) {
-            A = awal;
-            B = awal.kanan;
-            int nomor = 1;
-            while (B != berhenti) {
-                if (A.nama.compareTo(B.nama) > 0) {
-                    // tukarkan elemen dari simpul A dan elemen dari simpul B
-                    tukarNilai(A, B);
-                }
-                A = A.kanan;
-                B = B.kanan;
-                nomor++;
-            }
-            berhenti = A;
-        }
-        System.out.println("===PROSES PENGURUTAN BUBBLE SELESAI======");
-    }
-
-    // Program 11.2. Fungsi Bubblesort untuk single linkedlist dengan penukaran
-    // posisi heap
-    public static void mengurutkanDataBubble_TeknikTukarHeap_singleList() {
-        int N = hitungJumlahSimpul();
-        simpul A = null;
-        simpul B = null;
-        simpul bantu = null;
-        simpul berhenti = akhir.kanan;
-        int nomor;
-
-        System.out.println("Banyaknya simpul = " + hitungJumlahSimpul());
-        for (int i = 1; i <= hitungJumlahSimpul() - 1; i++)
-        // for (int i=1; i<= 4; i++)
-        {
-            A = awal;
-            B = awal.kanan;
-            nomor = 1;
-
-            // proses banding-tukar, khusus simpul pertama dgn sebelahnya
-            if (A.nama.compareTo(B.nama) > 0) {
-                A.kanan = B.kanan;
-                B.kanan = A;
-                awal = B;
-            }
-
-            // proses banding-tukar, simpul kedua dgn sebelahnya, dst
-            nomor++;
-            bantu = awal;
-            while (bantu.kanan.kanan != berhenti) {
-                A = bantu.kanan;
-                B = bantu.kanan.kanan;
-                if (A.nama.compareTo(B.nama) > 0) {
-                    // tukarkan simpul A dan simpul B
-                    A.kanan = B.kanan;
-                    B.kanan = A;
-                    bantu.kanan = B;
-                    if (B == akhir)
-                        akhir = A;
-                }
-                bantu = bantu.kanan;
-                nomor++;
-            }
-            berhenti = bantu.kanan;
-            ;
-            System.out.println("");
-        }
-        System.out.println("===PROSES PENGURUTAN BUBBLE SELESAI======");
-    }
-
-    // Program 11.4. Fungsi Linear Search pada single linkedlist
-    public static void cariLinear() {
-        if (awal == null) // jika senarai masih kosong
+    public static void cetakSenaraiMaju() {
+        if (awal == null)
             System.out.print("....MAAF SENARAI KOSONG....");
-        else // jika senarai tidak kosong
-        {
-            System.out.print("Silakan masukkan nama yang anda cari : ");
-            String NAMACARI = masukan.nextLine();
+        else {
+            System.out.println(" ");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.printf("| %-3s | %-15s | %-20s | %-8s | %-10s | %-15s | %-15s | %-15s | %-8s |%n",
+                    "NO", "NAMA", "ALAMAT", "UMUR", "JEKEL", "HOBI 1", "HOBI 2", "HOBI 3", "IPK");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
 
-            boolean statusKetemu = false;
-            int i = 1; // inisialisasi i untuk menghitung posisi simpul yang sedang diperiksa dari 0 di
-                       // ganti menjadi 1 agar posisi yang ditampilkan sesuai dengan posisi sebenarnya
-                       // (dimulai dari 1)
-            int posisiKetemu = -1;
+            simpul bantu = awal;
+            int no = 1;
 
-            simpul bantu;
-            bantu = awal;
             while (bantu != null) {
-                if (NAMACARI.equals(bantu.nama)) {
-                    statusKetemu = true;
-                    posisiKetemu = i;
-                }
-                bantu = bantu.kanan;
-                i++;
+                System.out.printf("| %-3d | %-15s | %-20s | %-8d | %-10s | %-15s | %-15s | %-15s | %-8.2f |%n",
+                        no, bantu.nama, bantu.alamat, bantu.umur, bantu.jekel,
+                        bantu.hobi[0], bantu.hobi[1], bantu.hobi[2], bantu.ipk);
+                bantu = bantu.kanan; // traversal ke depan
+                no++;
             }
-            System.out.println("Status Ketemu = " + statusKetemu + " di posisi ke " + posisiKetemu);
+
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.println(" ");
         }
     }
 
-    public static void mengurutkanDataInsertion_TeknikTukarNilai_singleList() {
-        if (awal == null || awal.kanan == null) {
-            System.out.println("Senarai kosong atau hanya berisi 1 simpul, tidak perlu diurutkan.");
-            return;
-        }
+    public static void cetakSenaraiMundur() {
+        if (awal == null)
+            System.out.print("....MAAF SENARAI KOSONG....");
+        else {
+            System.out.println(" ");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.printf("| %-3s | %-15s | %-20s | %-8s | %-10s | %-15s | %-15s | %-15s | %-8s |%n",
+                    "NO", "NAMA", "ALAMAT", "UMUR", "JEKEL", "HOBI 1", "HOBI 2", "HOBI 3", "IPK");
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
 
-        System.out.println("Banyaknya simpul = " + hitungJumlahSimpul());
+            simpul bantu = akhir;
+            int no = 1;
 
-        simpul i = awal.kanan; // Dimulai dari simpul kedua
-        while (i != null) {
-            simpul j = awal;
-            // Cari posisi yang tepat dari awal hingga simpul 'i'
-            while (j != i) {
-                if (j.nama.compareTo(i.nama) > 0) {
-                    // Tukar nilai data antara simpul J dan simpul I
-                    tukarNilai(j, i);
-                }
-                j = j.kanan;
-            }
-            i = i.kanan; // Berpindah ke simpul berikutnya
-        }
-        System.out.println("===PROSES PENGURUTAN INSERTION (TUKAR NILAI) SELESAI======");
-    }
-
-    public static void mengurutkanDataInsertion_TeknikTukarHeap_singleList() {
-        if (awal == null || awal.kanan == null) {
-            System.out.println("Senarai kosong atau hanya berisi 1 simpul.");
-            return;
-        }
-
-        System.out.println("Banyaknya simpul = " + hitungJumlahSimpul());
-
-        simpul listBaruTerurut = null; // Head untuk list baru yang terurut
-        simpul saatIni = awal; // Pointer untuk menelusuri list asli
-
-        while (saatIni != null) {
-            simpul berikutnya = saatIni.kanan; // Simpan referensi ke simpul selanjutnya sebelum dicopot
-
-            // Kasus A: Jika list baru masih kosong ATAU simpul saatIni harus berada di
-            // paling awal
-            if (listBaruTerurut == null || listBaruTerurut.nama.compareTo(saatIni.nama) >= 0) {
-                saatIni.kanan = listBaruTerurut;
-                listBaruTerurut = saatIni;
-            }
-            // Kasus B: Menyisipkan simpul di tengah atau di akhir list baru
-            else {
-                simpul bantu = listBaruTerurut;
-                // Cari simpul yang nilainya tepat sebelum posisi sisip
-                while (bantu.kanan != null && bantu.kanan.nama.compareTo(saatIni.nama) < 0) {
-                    bantu = bantu.kanan;
-                }
-                // Sisipkan simpul saatIni di antara 'bantu' dan 'bantu.kanan'
-                saatIni.kanan = bantu.kanan;
-                bantu.kanan = saatIni;
+            while (bantu != null) {
+                System.out.printf("| %-3d | %-15s | %-20s | %-8d | %-10s | %-15s | %-15s | %-15s | %-8.2f |%n",
+                        no, bantu.nama, bantu.alamat, bantu.umur, bantu.jekel,
+                        bantu.hobi[0], bantu.hobi[1], bantu.hobi[2], bantu.ipk);
+                bantu = bantu.kiri; // traversal ke belakang
+                no++;
             }
 
-            saatIni = berikutnya; // Lanjut ke simpul berikutnya dari list asli
+            System.out.println(
+                    "+-----+-----------------+----------------------+----------+------------+-----------------+-----------------+-----------------+----------+");
+            System.out.println(" ");
         }
-
-        // Kembalikan ke pointer utama list Anda
-        awal = listBaruTerurut;
-
-        // Opsional: Cari kembali simpul akhir yang baru untuk memperbarui pointer
-        // 'akhir' Anda
-        simpul cariAkhir = awal;
-        while (cariAkhir != null && cariAkhir.kanan != null) {
-            cariAkhir = cariAkhir.kanan;
-        }
-        akhir = cariAkhir;
-
-        System.out.println("===PROSES PENGURUTAN INSERTION (TUKAR HEAP) SELESAI======");
     }
 
     public static void main(String[] args) {
-        inisialisasiSenaraiKosong();
         tambahDepan();
         tambahDepan();
         tambahDepan();
@@ -473,26 +344,10 @@ class modul11_tugas1_SingleList { // FIX 2: semua method masuk ke dalam class in
         tambahBelakang();
         tambahBelakang();
         cetakSenarai();
-        mengurutkanDataInsertion_TeknikTukarHeap_singleList();
-        cetakSenarai();
-
-        System.out.println();
-        System.out.println("==============================================");
-        System.out.println("==============================================");
-        System.out.println();
-
-        inisialisasiSenaraiKosong();
-        tambahDepan();
-        tambahDepan();
-        tambahDepan();
-        tambahDepan();
-        cetakSenarai();
-        tambahBelakang();
-        tambahBelakang();
-        tambahBelakang();
-        tambahBelakang();
-        cetakSenarai();
-        mengurutkanDataInsertion_TeknikTukarHeap_singleList();
-        cetakSenarai();
+        tambahTengah();
+        cetakSenaraiMaju();
+        cetakSenaraiMundur();
+        hapus();
+        cetakSenaraiMaju();
     }
 }
